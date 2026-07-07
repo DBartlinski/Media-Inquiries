@@ -46,8 +46,8 @@ export function AuthModal({ onSave }: AuthModalProps) {
             <Database className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Media Inquiries</h1>
-            <p className="text-sm text-gray-500">VHA Communications Dashboard</p>
+            <h1 className="text-xl font-bold text-gray-900">VA Research Media Inquiries</h1>
+            <p className="text-sm text-gray-500">ORD Communications</p>
           </div>
         </div>
 

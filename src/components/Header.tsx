@@ -60,8 +60,8 @@ export function Header({
         {/* Logo */}
         <div className="flex items-center gap-2 mr-2">
           <Database className="h-5 w-5 text-violet-300" />
-          <span className="font-semibold text-base tracking-tight">Media Inquiries</span>
-          <span className="text-violet-400 text-xs hidden sm:block">· VHA Communications</span>
+          <span className="font-semibold text-base tracking-tight">VA Research Media Inquiries</span>
+          <span className="text-violet-400 text-xs hidden sm:block">· ORD Communications</span>
         </div>
 
         <div className="flex-1" />

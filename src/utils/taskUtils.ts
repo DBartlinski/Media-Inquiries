@@ -130,11 +130,11 @@ export function getInitials(name: string): string {
 }
 
 export const DEFAULT_CHECKLIST_ITEMS = [
-  "Rec'd request from reporter/outlet/VHA Comms",
+  "Rec'd request from reporter/outlet/ORD Comms",
   "Rec'd questions and passed along to SME",
-  'Looped in VHA Comms',
+  'Looped in ORD Comms',
   "Rec'd responses from SME",
-  'Reviewed responses and sent to VHA Comms',
+  'Reviewed responses and sent to ORD Comms',
 ]
 
 export const DEFAULT_DESCRIPTION_TEMPLATE = `**News Agency:** 
