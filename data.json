@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastImported": "2026-07-07T13:50:06.157Z",
+  "lastImported": "2026-07-07T13:53:27.314Z",
   "tasks": [
     {
       "id": "id_P8NfoZECYeGzYsknFBYIAF4Wg",
@@ -3114,6 +3114,52 @@
       ],
       "labels": "",
       "description": "Cancelled\r\nRequested info on \"cool technology\"\r\n\r\nQ: What are some examples of the VA using technology to improve its own internal operations and the lives of Veterans, the aging population, and/or people with special needs? (This was initially why your post caught my eye)\r\nQ: Are there successful use cases with AI?\r\nQ: What does tech R&D look like within the VA? Why is that an important focus area?\r\n\r\nQ: How is the VA preparing Veterans for careers within the IT industry or related fields? Are there any notable training programs?"
+    },
+    {
+      "name": "study on AI in VA",
+      "bucket": "Media Inquiries",
+      "progress": "In progress",
+      "priority": "Medium",
+      "assignedTo": [
+        "david bartlinski"
+      ],
+      "createdBy": "",
+      "createdDate": "7/7/2026",
+      "startDate": "2026-07-07",
+      "dueDate": "2026-07-08",
+      "isRecurring": false,
+      "late": false,
+      "completedDate": "",
+      "completedBy": "",
+      "checklist": [
+        {
+          "item": "Rec'd request from reporter/outlet/VHA Comms",
+          "completed": false
+        },
+        {
+          "item": "Rec'd questions and passed along to SME",
+          "completed": false
+        },
+        {
+          "item": "Looped in VHA Comms",
+          "completed": false
+        },
+        {
+          "item": "Rec'd responses from SME",
+          "completed": false
+        },
+        {
+          "item": "Reviewed responses and sent to VHA Comms",
+          "completed": false
+        },
+        {
+          "item": "personal research",
+          "completed": false
+        }
+      ],
+      "labels": "mental health, ai study",
+      "description": "**News Agency:** news outlet\n\n**Reporter:** john Doe\n\n**Query Submitted:** today\n\n**Deadline:** tomorrow\n\n**Topic:** AI and mental health in VA\n\n**Source/SME:** John Doe",
+      "id": "8mFLu5ahYBit3bHiekf5wxgI"
     }
   ]
 }
