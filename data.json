@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastImported": "2026-07-07T13:53:27.314Z",
+  "lastImported": "2026-07-07T13:53:58.292Z",
   "tasks": [
     {
       "id": "id_P8NfoZECYeGzYsknFBYIAF4Wg",
@@ -3118,7 +3118,7 @@
     {
       "name": "study on AI in VA",
       "bucket": "Media Inquiries",
-      "progress": "In progress",
+      "progress": "Archive",
       "priority": "Medium",
       "assignedTo": [
         "david bartlinski"
@@ -3159,7 +3159,8 @@
       ],
       "labels": "mental health, ai study",
       "description": "**News Agency:** news outlet\n\n**Reporter:** john Doe\n\n**Query Submitted:** today\n\n**Deadline:** tomorrow\n\n**Topic:** AI and mental health in VA\n\n**Source/SME:** John Doe",
-      "id": "8mFLu5ahYBit3bHiekf5wxgI"
+      "id": "8mFLu5ahYBit3bHiekf5wxgI",
+      "localEditTimestamp": "2026-07-07T13:53:58.292Z"
     }
   ]
 }
