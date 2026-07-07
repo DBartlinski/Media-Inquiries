@@ -4,58 +4,63 @@ A Kanban-style dashboard for tracking VHA Communications media inquiries, built 
 
 ---
 
-## Quick Start (For dbartlinski)
+## Quick Start (Shared Team Token)
 
-### Your Setup
+### Setup Overview
 - **GitHub user**: `dbartlinski`
-- **Data repo**: `Media Inquiries` (where task data lives)
-- **Dashboard app**: Deploy this project to GitHub Pages
+- **Data repo**: `Media Inquiries` (shared team data)
+- **Dashboard app**: https://dbartlinski.github.io/Media-Inquiries/
+- **Access**: All team members use the **same Personal Access Token**
 
-### 5-Minute Setup
-1. **Generate Personal Access Token** ([go here](https://github.com/settings/tokens/new?scopes=repo&description=Media+Inquiries+Dashboard))
-   - Copy the token immediately
-2. **Deploy this app** to GitHub Pages (enable Actions in Settings → Pages)
-3. **Open your deployed app URL** → enter your token + `dbartlinski` / `Media Inquiries` → click **Connect**
-4. **Import your CSV** → drop `Media Inquiries.csv` → done! 🎉
-
----
-
-## One-Time Setup (First Use)
-
-### Step 1: Create the data repository
-
-You already have: **GitHub user `dbartlinski`** and **data repo `Media Inquiries`**
-
-✅ Just make sure your `Media Inquiries` repo on GitHub is initialized with a `main` branch (it has a README or initial commit)
-
-### Step 2: Generate a GitHub Personal Access Token
-
-1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
-2. Click **Generate new token (classic)**
-3. Set a name (e.g., "Media Inquiries Dashboard")
-4. Select scope: **`repo`** (full control)
-5. Click **Generate token** — copy it immediately
-
-### Step 3: Deploy the app to GitHub Pages
-
-1. Create a new GitHub repo named `media-inquiries-dashboard` (or any name)
-2. Push this project code to `main`
-3. Go to **Settings → Pages**
-4. Under **Source**, select **GitHub Actions**
-5. The workflow in `.github/workflows/deploy.yml` will auto-deploy on push
-
-Note the deployed GitHub Pages URL (e.g., `https://dbartlinski.github.io/media-inquiries-dashboard/`)
-
-### Step 4: Connect the app
-
-1. Open the deployed GitHub Pages URL
-2. Enter:
-   - **Personal Access Token** (from Step 2)
+### For Team Members (30 Seconds)
+1. **Open the dashboard**: https://dbartlinski.github.io/Media-Inquiries/
+2. **Enter these credentials** (same for everyone):
+   - **Personal Access Token**: `[ask your admin for the shared token]`
    - **Owner**: `dbartlinski`
    - **Repository**: `Media Inquiries`
    - **Branch**: `main`
    - **Data file path**: `data.json` (default)
-3. Click **Connect to GitHub**
+3. Click **Connect to GitHub** → done!
+
+✅ **All team members see the same data.** When you save, everyone else sees it instantly (after refreshing).
+
+---
+
+## Admin Setup (One-Time)
+
+If you're the **admin** setting this up for your team:
+
+### Step 1: Verify the repositories
+
+✅ **Data repo** (`Media Inquiries`): Should exist on GitHub with a `main` branch and `data.json` file  
+✅ **App repo** (this one): Should be deployed to GitHub Pages at `https://dbartlinski.github.io/Media-Inquiries/`
+
+### Step 2: Generate a shared Personal Access Token
+
+1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
+2. Click **Generate new token (classic)**
+3. **Token name**: "Media Inquiries Dashboard - Team"
+4. **Scope**: Check **`repo`** (full control)
+5. **Expiration**: No expiration (or set to 90 days for rotation)
+6. Click **Generate token**
+7. **Copy the token immediately** — you won't see it again
+
+### Step 3: Share the token with your team
+
+Give team members:
+- The **shared Personal Access Token** (from Step 2) — via email, password manager, or team wiki
+- The **dashboard URL**: `https://dbartlinski.github.io/Media-Inquiries/`
+- These credentials (same for everyone):
+  ```
+  Owner: dbartlinski
+  Repository: Media Inquiries
+  Branch: main
+  Data file path: data.json
+  ```
+
+### Step 4: Team members open the app
+
+They paste the shared token and credentials → click **Connect** → done!
 
 ---
 
