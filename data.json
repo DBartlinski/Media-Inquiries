@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastImported": "2026-07-07T13:53:58.292Z",
+  "lastImported": "2026-07-08T14:16:43.951Z",
   "tasks": [
     {
       "id": "id_P8NfoZECYeGzYsknFBYIAF4Wg",
@@ -3161,6 +3161,48 @@
       "description": "**News Agency:** news outlet\n\n**Reporter:** john Doe\n\n**Query Submitted:** today\n\n**Deadline:** tomorrow\n\n**Topic:** AI and mental health in VA\n\n**Source/SME:** John Doe",
       "id": "8mFLu5ahYBit3bHiekf5wxgI",
       "localEditTimestamp": "2026-07-07T13:53:58.292Z"
+    },
+    {
+      "name": "Test Query",
+      "bucket": "Media Inquiries",
+      "progress": "In progress",
+      "priority": "Medium",
+      "assignedTo": [
+        "McGovern"
+      ],
+      "createdBy": "",
+      "createdDate": "7/8/2026",
+      "startDate": "2026-07-08",
+      "dueDate": "2026-07-15",
+      "isRecurring": false,
+      "late": false,
+      "completedDate": "",
+      "completedBy": "",
+      "checklist": [
+        {
+          "item": "Rec'd request from reporter/outlet/ORD Comms",
+          "completed": false
+        },
+        {
+          "item": "Rec'd questions and passed along to SME",
+          "completed": false
+        },
+        {
+          "item": "Looped in ORD Comms",
+          "completed": false
+        },
+        {
+          "item": "Rec'd responses from SME",
+          "completed": false
+        },
+        {
+          "item": "Reviewed responses and sent to ORD Comms",
+          "completed": false
+        }
+      ],
+      "labels": "PTSD, psychedelics, TBI",
+      "description": "**News Agency: Bob's Newspaper\n\n**Reporter:Bob Journalist\n\n**Query Submitted:** \n\n**Deadline:** \n\n**Topic: Neuroplasticity Outcomes with Guided psilocybin: a Genomic Imaging and Neuropsychological study (NOGGIN)\n\n**Source/SME: Dr. So and So",
+      "id": "uG475xtaC6B5two2GiKLa7Ww"
     }
   ]
 }
