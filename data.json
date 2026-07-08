@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastImported": "2026-07-08T14:18:03.727Z",
+  "lastImported": "2026-07-08T14:18:13.463Z",
   "tasks": [
     {
       "id": "id_P8NfoZECYeGzYsknFBYIAF4Wg",
@@ -3201,9 +3201,9 @@
         }
       ],
       "labels": "PTSD, psychedelics, TBI",
-      "description": "**News Agency**: Bob's Newspaper\n\n**Reporter:Bob Journalist\n\n**Query Submitted:** \n\n**Deadline:** \n\n**Topic**: Neuroplasticity Outcomes with Guided psilocybin: a Genomic Imaging and Neuropsychological study (NOGGIN)\n\n**Source/SME**: Dr. So and So",
+      "description": "**News Agency**: Bob's Newspaper\n\n**Reporter**: Bob Journalist\n\n**Query Submitted:** \n\n**Deadline:** \n\n**Topic**: Neuroplasticity Outcomes with Guided psilocybin: a Genomic Imaging and Neuropsychological study (NOGGIN)\n\n**Source/SME**: Dr. So and So",
       "id": "uG475xtaC6B5two2GiKLa7Ww",
-      "localEditTimestamp": "2026-07-08T14:18:03.726Z"
+      "localEditTimestamp": "2026-07-08T14:18:13.462Z"
     }
   ]
 }
