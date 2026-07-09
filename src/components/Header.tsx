@@ -1,4 +1,4 @@
-import { Database, Plus, Upload, RefreshCw, Settings, CheckCircle2, AlertCircle, Loader2, PanelLeftClose, PanelLeft } from 'lucide-react'
+import { Database, Plus, Upload, Download, RefreshCw, Settings, CheckCircle2, AlertCircle, Loader2, PanelLeftClose, PanelLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { SyncStatus } from '@/types'
 
@@ -7,6 +7,7 @@ interface HeaderProps {
   error: string | null
   onAddTask: () => void
   onImport: () => void
+  onExport: () => void
   onToggleSidebar: () => void
   onSettings: () => void
   onRefresh: () => void
@@ -40,6 +41,7 @@ export function Header({
   error,
   onAddTask,
   onImport,
+  onExport,
   onToggleSidebar,
   onSettings,
   onRefresh,
@@ -88,6 +90,16 @@ export function Header({
         >
           <Upload className="h-4 w-4 mr-1.5" />
           Import CSV
+        </Button>
+
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={onExport}
+          className="text-violet-200 hover:text-white hover:bg-violet-700"
+        >
+          <Download className="h-4 w-4 mr-1.5" />
+          Export
         </Button>
 
         <Button

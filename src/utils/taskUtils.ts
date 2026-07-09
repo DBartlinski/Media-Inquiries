@@ -92,7 +92,11 @@ function searchMatches(task: Task, query: string): boolean {
     task.labels,
     task.createdBy,
     task.bucket,
+    task.newsOutlet ?? '',
+    task.reporter ?? '',
+    task.subject ?? '',
     ...task.assignedTo,
+    ...(task.sourceSme ?? []),
     ...task.checklist.map((c) => c.item),
   ]
     .join(' ')
@@ -106,6 +110,13 @@ export function filterTasks(tasks: Task[], filters: FilterState): Task[] {
     if (!searchMatches(task, filters.search)) return false
     if (filters.priority.length > 0 && !filters.priority.includes(task.priority)) return false
     if (filters.status.length > 0 && !filters.status.includes(task.progress)) return false
+
+    if (filters.newsOutlet.length > 0 && !filters.newsOutlet.includes(task.newsOutlet ?? '')) return false
+    if (filters.reporter.length > 0 && !filters.reporter.includes(task.reporter ?? '')) return false
+    if (filters.sourceSme.length > 0) {
+      const taskSmes = task.sourceSme ?? []
+      if (!filters.sourceSme.some((s) => taskSmes.includes(s))) return false
+    }
 
     if (filters.dateFrom) {
       const taskDate = parseDate(task.dueDate) ?? parseDate(task.createdDate)
@@ -154,3 +165,23 @@ export const KANBAN_COLUMNS: Array<{ id: Task['progress']; label: string; color:
   { id: 'In progress', label: 'In Progress', color: 'border-blue-400' },
   { id: 'Completed', label: 'Completed', color: 'border-green-400' },
 ]
+
+/** Extract sorted unique non-empty values for a given string field across all tasks */
+export function getUniqueStringValues(tasks: Task[], field: 'newsOutlet' | 'reporter'): string[] {
+  const set = new Set<string>()
+  for (const t of tasks) {
+    const val = t[field]
+    if (val) set.add(val)
+  }
+  return [...set].sort((a, b) => a.localeCompare(b))
+}
+
+/** Extract sorted unique non-empty values from an array field across all tasks */
+export function getUniqueArrayValues(tasks: Task[], field: 'assignedTo' | 'sourceSme'): string[] {
+  const set = new Set<string>()
+  for (const t of tasks) {
+    const arr = t[field]
+    if (arr) for (const v of arr) if (v) set.add(v)
+  }
+  return [...set].sort((a, b) => a.localeCompare(b))
+}

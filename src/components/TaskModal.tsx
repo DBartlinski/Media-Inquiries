@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { formatDate, isOverdue, PRIORITY_BADGE_COLORS, STATUS_COLORS } from '@/utils/taskUtils'
 import { cn } from '@/lib/utils'
 import type { Task, ChecklistItem } from '@/types'
@@ -24,6 +25,12 @@ interface TaskModalProps {
   onClose: () => void
   onSave: (task: Task) => void
   onArchive: (task: Task) => void
+  suggestions: {
+    assignedTo: string[]
+    newsOutlet: string[]
+    reporter: string[]
+    sourceSme: string[]
+  }
 }
 
 const PRIORITIES = ['Urgent', 'Important', 'Medium', 'Low']
@@ -48,7 +55,7 @@ function renderDescription(text: string) {
   })
 }
 
-export function TaskModal({ task, onClose, onSave, onArchive }: TaskModalProps) {
+export function TaskModal({ task, onClose, onSave, onArchive, suggestions }: TaskModalProps) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState<Task>(task)
 
@@ -243,6 +250,86 @@ export function TaskModal({ task, onClose, onSave, onArchive }: TaskModalProps) 
                   <Badge className={cn('text-xs border', PRIORITY_BADGE_COLORS[task.priority])} variant="outline">
                     {task.priority}
                   </Badge>
+                )}
+              </div>
+
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  News Outlet
+                </Label>
+                {editing ? (
+                  <AutocompleteInput
+                    value={draft.newsOutlet ?? ''}
+                    onChange={(v) => setDraft({ ...draft, newsOutlet: v })}
+                    suggestions={suggestions.newsOutlet}
+                    placeholder="e.g., U.S. Medicine"
+                    className="h-8 text-sm"
+                  />
+                ) : (
+                  <p className="text-xs text-gray-700">{task.newsOutlet || '—'}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Reporter
+                </Label>
+                {editing ? (
+                  <AutocompleteInput
+                    value={draft.reporter ?? ''}
+                    onChange={(v) => setDraft({ ...draft, reporter: v })}
+                    suggestions={suggestions.reporter}
+                    placeholder="e.g., Mary Anne Dunkin"
+                    className="h-8 text-sm"
+                  />
+                ) : (
+                  <p className="text-xs text-gray-700">{task.reporter || '—'}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Subject
+                </Label>
+                {editing ? (
+                  <Input
+                    value={draft.subject ?? ''}
+                    onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
+                    className="h-8 text-sm"
+                    placeholder="Brief topic"
+                  />
+                ) : (
+                  <p className="text-xs text-gray-700">{task.subject || '—'}</p>
+                )}
+              </div>
+
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Source/SME
+                </Label>
+                {editing ? (
+                  <AutocompleteInput
+                    value={(draft.sourceSme ?? []).join('; ')}
+                    onChange={(v) =>
+                      setDraft({
+                        ...draft,
+                        sourceSme: v.split(';').map((s) => s.trim()).filter(Boolean),
+                      })
+                    }
+                    suggestions={suggestions.sourceSme}
+                    placeholder="Dr. Name; Dr. Name"
+                    className="h-8 text-sm"
+                  />
+                ) : (
+                  <div className="space-y-0.5">
+                    {(task.sourceSme ?? []).length > 0 ? (
+                      task.sourceSme.map((s) => (
+                        <p key={s} className="text-gray-700 text-xs">{s}</p>
+                      ))
+                    ) : (
+                      <p className="text-gray-400 text-xs italic">—</p>
+                    )}
+                  </div>
                 )}
               </div>
 

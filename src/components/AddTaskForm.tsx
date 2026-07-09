@@ -13,18 +13,25 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { AutocompleteInput } from '@/components/AutocompleteInput'
 import { DEFAULT_CHECKLIST_ITEMS, DEFAULT_DESCRIPTION_TEMPLATE } from '@/utils/taskUtils'
 import type { Task } from '@/types'
 
 interface AddTaskFormProps {
   onClose: () => void
   onSave: (task: Omit<Task, 'id'>) => void
+  suggestions: {
+    assignedTo: string[]
+    newsOutlet: string[]
+    reporter: string[]
+    sourceSme: string[]
+  }
 }
 
 const PRIORITIES = ['Urgent', 'Important', 'Medium', 'Low']
 const STATUSES: Task['progress'][] = ['Not started', 'In progress', 'Completed']
 
-export function AddTaskForm({ onClose, onSave }: AddTaskFormProps) {
+export function AddTaskForm({ onClose, onSave, suggestions }: AddTaskFormProps) {
   const [name, setName] = useState('')
   const [priority, setPriority] = useState('Medium')
   const [progress, setProgress] = useState<Task['progress']>('In progress')
@@ -33,6 +40,10 @@ export function AddTaskForm({ onClose, onSave }: AddTaskFormProps) {
   const [startDate, setStartDate] = useState('')
   const [description, setDescription] = useState(DEFAULT_DESCRIPTION_TEMPLATE)
   const [labels, setLabels] = useState('')
+  const [newsOutlet, setNewsOutlet] = useState('')
+  const [reporter, setReporter] = useState('')
+  const [subject, setSubject] = useState('')
+  const [sourceSme, setSourceSme] = useState('')
   const [checklistItems, setChecklistItems] = useState<string[]>([...DEFAULT_CHECKLIST_ITEMS])
   const [newItem, setNewItem] = useState('')
 
@@ -66,6 +77,10 @@ export function AddTaskForm({ onClose, onSave }: AddTaskFormProps) {
       checklist: checklistItems.map((item) => ({ item, completed: false })),
       labels,
       description,
+      newsOutlet: newsOutlet.trim(),
+      reporter: reporter.trim(),
+      subject: subject.trim(),
+      sourceSme: sourceSme.split(';').map((s) => s.trim()).filter(Boolean),
     }
     onSave(task)
   }
@@ -134,9 +149,10 @@ export function AddTaskForm({ onClose, onSave }: AddTaskFormProps) {
                 <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
                   Assigned To
                 </Label>
-                <Input
+                <AutocompleteInput
                   value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
+                  onChange={setAssignedTo}
+                  suggestions={suggestions.assignedTo}
                   placeholder="Name; Name"
                 />
               </div>
@@ -158,6 +174,56 @@ export function AddTaskForm({ onClose, onSave }: AddTaskFormProps) {
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Media inquiry fields */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  News Outlet
+                </Label>
+                <AutocompleteInput
+                  value={newsOutlet}
+                  onChange={setNewsOutlet}
+                  suggestions={suggestions.newsOutlet}
+                  placeholder="e.g., U.S. Medicine"
+                />
+              </div>
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Reporter
+                </Label>
+                <AutocompleteInput
+                  value={reporter}
+                  onChange={setReporter}
+                  suggestions={suggestions.reporter}
+                  placeholder="e.g., Mary Anne Dunkin"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Subject
+                </Label>
+                <Input
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  placeholder="Brief topic of inquiry"
+                />
+              </div>
+              <div>
+                <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-1">
+                  Source/SME
+                </Label>
+                <AutocompleteInput
+                  value={sourceSme}
+                  onChange={setSourceSme}
+                  suggestions={suggestions.sourceSme}
+                  placeholder="Dr. Name; Dr. Name"
                 />
               </div>
             </div>

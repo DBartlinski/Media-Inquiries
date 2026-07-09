@@ -25,6 +25,10 @@ export interface Task {
   checklist: ChecklistItem[];
   labels: string;
   description: string;
+  newsOutlet: string;
+  reporter: string;
+  subject: string;
+  sourceSme: string[];
   localEditTimestamp?: string;
 }
 
@@ -52,6 +56,9 @@ export interface FilterState {
   search: string;
   priority: string[];
   status: string[];
+  newsOutlet: string[];
+  reporter: string[];
+  sourceSme: string[];
   dateFrom: string;
   dateTo: string;
   includeArchive: boolean;

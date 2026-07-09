@@ -1,4 +1,5 @@
-import { Search, X, RotateCcw, Archive } from 'lucide-react'
+import { useState } from 'react'
+import { Search, X, RotateCcw, Archive, ChevronDown, ChevronRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -12,6 +13,9 @@ interface SearchSidebarProps {
   filters: FilterState
   onChange: (f: FilterState) => void
   taskCount: number
+  uniqueOutlets: string[]
+  uniqueReporters: string[]
+  uniqueSmes: string[]
 }
 
 function toggleArrayItem(arr: string[], item: string): string[] {
@@ -25,11 +29,21 @@ const PRIORITY_DOTS: Record<string, string> = {
   Low: 'bg-gray-400',
 }
 
-export function SearchSidebar({ filters, onChange, taskCount }: SearchSidebarProps) {
+export function SearchSidebar({ filters, onChange, taskCount, uniqueOutlets, uniqueReporters, uniqueSmes }: SearchSidebarProps) {
+  const [outletSearch, setOutletSearch] = useState('')
+  const [reporterSearch, setReporterSearch] = useState('')
+  const [smeSearch, setSmeSearch] = useState('')
+  const [outletOpen, setOutletOpen] = useState(false)
+  const [reporterOpen, setReporterOpen] = useState(false)
+  const [smeOpen, setSmeOpen] = useState(false)
+
   const hasFilters =
     filters.search !== '' ||
     filters.priority.length > 0 ||
     filters.status.length > 0 ||
+    filters.newsOutlet.length > 0 ||
+    filters.reporter.length > 0 ||
+    filters.sourceSme.length > 0 ||
     filters.dateFrom !== '' ||
     filters.dateTo !== '' ||
     filters.includeArchive
@@ -39,6 +53,9 @@ export function SearchSidebar({ filters, onChange, taskCount }: SearchSidebarPro
       search: '',
       priority: [],
       status: [],
+      newsOutlet: [],
+      reporter: [],
+      sourceSme: [],
       dateFrom: '',
       dateTo: '',
       includeArchive: false,
@@ -111,6 +128,48 @@ export function SearchSidebar({ filters, onChange, taskCount }: SearchSidebarPro
           </div>
         </div>
 
+        {/* News Outlet */}
+        {uniqueOutlets.length > 0 && (
+          <CollapsibleFilter
+            title="News Outlet"
+            open={outletOpen}
+            onToggle={() => setOutletOpen((v) => !v)}
+            items={uniqueOutlets}
+            selected={filters.newsOutlet}
+            onToggleItem={(item) => onChange({ ...filters, newsOutlet: toggleArrayItem(filters.newsOutlet, item) })}
+            searchValue={outletSearch}
+            onSearchChange={setOutletSearch}
+          />
+        )}
+
+        {/* Reporter */}
+        {uniqueReporters.length > 0 && (
+          <CollapsibleFilter
+            title="Reporter"
+            open={reporterOpen}
+            onToggle={() => setReporterOpen((v) => !v)}
+            items={uniqueReporters}
+            selected={filters.reporter}
+            onToggleItem={(item) => onChange({ ...filters, reporter: toggleArrayItem(filters.reporter, item) })}
+            searchValue={reporterSearch}
+            onSearchChange={setReporterSearch}
+          />
+        )}
+
+        {/* Source/SME */}
+        {uniqueSmes.length > 0 && (
+          <CollapsibleFilter
+            title="Source/SME"
+            open={smeOpen}
+            onToggle={() => setSmeOpen((v) => !v)}
+            items={uniqueSmes}
+            selected={filters.sourceSme}
+            onToggleItem={(item) => onChange({ ...filters, sourceSme: toggleArrayItem(filters.sourceSme, item) })}
+            searchValue={smeSearch}
+            onSearchChange={setSmeSearch}
+          />
+        )}
+
         {/* Archive */}
         <div>
           <label className="flex items-center gap-2 cursor-pointer hover:text-gray-900">
@@ -166,5 +225,72 @@ export function SearchSidebar({ filters, onChange, taskCount }: SearchSidebarPro
         </div>
       </div>
     </aside>
+  )
+}
+
+interface CollapsibleFilterProps {
+  title: string
+  open: boolean
+  onToggle: () => void
+  items: string[]
+  selected: string[]
+  onToggleItem: (item: string) => void
+  searchValue: string
+  onSearchChange: (v: string) => void
+}
+
+function CollapsibleFilter({
+  title,
+  open,
+  onToggle,
+  items,
+  selected,
+  onToggleItem,
+  searchValue,
+  onSearchChange,
+}: CollapsibleFilterProps) {
+  const filtered = searchValue
+    ? items.filter((i) => i.toLowerCase().includes(searchValue.toLowerCase()))
+    : items
+
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className="flex items-center gap-1 font-semibold text-gray-600 mb-2 uppercase text-xs tracking-wider hover:text-gray-900 w-full text-left"
+      >
+        {open ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+        {title}
+        {selected.length > 0 && (
+          <span className="ml-auto text-violet-600 normal-case font-normal">{selected.length}</span>
+        )}
+      </button>
+      {open && (
+        <div className="space-y-1.5">
+          {items.length > 6 && (
+            <Input
+              placeholder={`Filter ${title.toLowerCase()}…`}
+              className="h-6 text-xs mb-1"
+              value={searchValue}
+              onChange={(e) => onSearchChange(e.target.value)}
+            />
+          )}
+          <div className="max-h-32 overflow-y-auto space-y-1.5">
+            {filtered.map((item) => (
+              <label key={item} className="flex items-center gap-2 cursor-pointer hover:text-gray-900">
+                <Checkbox
+                  checked={selected.includes(item)}
+                  onCheckedChange={() => onToggleItem(item)}
+                />
+                <span className="truncate text-xs">{item}</span>
+              </label>
+            ))}
+            {filtered.length === 0 && (
+              <p className="text-xs text-gray-400 italic">No matches</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

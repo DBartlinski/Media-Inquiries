@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useGitHub } from '@/hooks/useGitHub'
 import { useTasks } from '@/hooks/useTasks'
 import { AuthModal } from '@/components/AuthModal'
@@ -8,13 +8,17 @@ import { KanbanBoard } from '@/components/KanbanBoard'
 import { TaskModal } from '@/components/TaskModal'
 import { AddTaskForm } from '@/components/AddTaskForm'
 import { ImportModal } from '@/components/ImportModal'
-import { filterTasks } from '@/utils/taskUtils'
+import { ExportModal } from '@/components/ExportModal'
+import { filterTasks, getUniqueStringValues, getUniqueArrayValues } from '@/utils/taskUtils'
 import type { Task, FilterState } from '@/types'
 
 const DEFAULT_FILTERS: FilterState = {
   search: '',
   priority: [],
   status: [],
+  newsOutlet: [],
+  reporter: [],
+  sourceSme: [],
   dateFrom: '',
   dateTo: '',
   includeArchive: false,
@@ -29,6 +33,7 @@ export default function App() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [isAddingTask, setIsAddingTask] = useState(false)
   const [isImporting, setIsImporting] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   if (!isConfigured) {
@@ -36,6 +41,14 @@ export default function App() {
   }
 
   const filteredTasks = filterTasks(tasks, filters)
+
+  // Autocomplete suggestions derived from all tasks
+  const suggestions = {
+    assignedTo: getUniqueArrayValues(tasks, 'assignedTo'),
+    newsOutlet: getUniqueStringValues(tasks, 'newsOutlet'),
+    reporter: getUniqueStringValues(tasks, 'reporter'),
+    sourceSme: getUniqueArrayValues(tasks, 'sourceSme'),
+  }
 
   function handleUpdateTask(updated: Task) {
     void updateTask(updated)
@@ -55,6 +68,7 @@ export default function App() {
         error={error}
         onAddTask={() => setIsAddingTask(true)}
         onImport={() => setIsImporting(true)}
+        onExport={() => setIsExporting(true)}
         onToggleSidebar={() => setSidebarOpen((v) => !v)}
         onSettings={clearConfig}
         onRefresh={() => void reload()}
@@ -67,6 +81,9 @@ export default function App() {
             filters={filters}
             onChange={setFilters}
             taskCount={filteredTasks.length}
+            uniqueOutlets={suggestions.newsOutlet}
+            uniqueReporters={suggestions.reporter}
+            uniqueSmes={suggestions.sourceSme}
           />
         )}
 
@@ -92,6 +109,7 @@ export default function App() {
           onClose={() => setSelectedTask(null)}
           onSave={handleUpdateTask}
           onArchive={handleArchiveTask}
+          suggestions={suggestions}
         />
       )}
 
@@ -102,6 +120,7 @@ export default function App() {
             void addTask(task)
             setIsAddingTask(false)
           }}
+          suggestions={suggestions}
         />
       )}
 
@@ -113,6 +132,13 @@ export default function App() {
             void importTasks(diff)
             setIsImporting(false)
           }}
+        />
+      )}
+
+      {isExporting && (
+        <ExportModal
+          tasks={filteredTasks}
+          onClose={() => setIsExporting(false)}
         />
       )}
     </div>

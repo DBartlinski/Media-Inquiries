@@ -1,5 +1,6 @@
 import Papa from 'papaparse'
 import type { Task, ChecklistItem, ImportDiff } from '@/types'
+import { parseDescriptionFields } from '@/utils/descriptionParser'
 
 interface CsvRow {
   'Task ID': string
@@ -42,6 +43,9 @@ function parseRow(row: CsvRow): Task | null {
   const id = row['Task ID']?.trim()
   if (!id) return null
 
+  const description = row['Description']?.trim() ?? ''
+  const parsed = parseDescriptionFields(description)
+
   return {
     id,
     name: row['Task Name']?.trim() ?? '',
@@ -65,7 +69,11 @@ function parseRow(row: CsvRow): Task | null {
       row['Completed Checklist Items'] ?? '0'
     ),
     labels: row['Labels']?.trim() ?? '',
-    description: row['Description']?.trim() ?? '',
+    description,
+    newsOutlet: parsed.newsOutlet,
+    reporter: parsed.reporter,
+    subject: parsed.subject,
+    sourceSme: parsed.sourceSme,
   }
 }
 
